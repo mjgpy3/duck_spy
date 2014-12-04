@@ -59,3 +59,5 @@ Returns:
     }
 }
 ```
+# TODO
+ - Make DuckSpy have stub-able methods (e.g. `File.open(spy, 'r', &:read)`)
