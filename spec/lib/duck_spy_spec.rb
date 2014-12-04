@@ -19,6 +19,15 @@ describe DuckSpy do
         it { is_expected.to be_empty }
       end
     end
-  end
 
+    context 'that calls #foo on the spy' do
+      let(:body) { ->(spy) { spy.foo } }
+
+      describe '#calls' do
+        subject { duck_spy.calls }
+
+        it { is_expected.to match a_hash_including(foo: []) }
+      end
+    end
+  end
 end
