@@ -26,7 +26,25 @@ describe DuckSpy do
     context 'that calls #foo on the spy' do
       let(:body) { ->(spy) { spy.foo } }
 
-      it_behaves_like 'it knows about calls', foo: []
+      it_behaves_like 'it knows about calls', foo: { args: [], result_duck: {} }
+    end
+
+    context 'that calls #foo on the spy with 42 as an argument' do
+      let(:body) { ->(spy) { spy.foo(42) } }
+
+      it_behaves_like 'it knows about calls', foo: { args: [42], result_duck: {} }
+    end
+
+    context 'that calls #foo and #bar on the spy' do
+      let(:body) { ->(spy) { spy.foo; spy.bar } }
+
+      it_behaves_like 'it knows about calls', foo: { args: [], result_duck: {} }, bar: { args: [], result_duck: {} }
+    end
+
+    context 'that calls #foo on the spy, and #bar on the result' do
+      let(:body) { ->(spy) { spy.foo.bar } }
+
+      it_behaves_like 'it knows about calls', foo: { args: [], result_duck: { bar: {  args: [], result_duck: [] } } }
     end
   end
 end
