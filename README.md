@@ -15,7 +15,7 @@ The hope is that the "duck spy" will touch certain paths of code to, at least, m
 
 ## Spy behavior
 A `DuckSpy` tells you what methods (and what arguments) have been called.
-```
+```ruby
 spy = DuckSpy.new
 
 spy.foo(42)
@@ -23,7 +23,7 @@ spy.foo(42)
 spy.calls
 ```
 Returns:
-```
+```ruby
 {
     :foo => {
                :args => [
@@ -35,7 +35,7 @@ Returns:
 ```
 
 A `DuckSpy` can also tell you what interface it expects its result to be able to fulfil.
-```
+```ruby
 spy = DuckSpy.new
 
 spy.foo.baz(:some, 'args')
@@ -43,7 +43,7 @@ spy.foo.baz(:some, 'args')
 spy.calls
 ```
 Returns:
-```
+```ruby
 {
     :foo => {
                :args => [],
