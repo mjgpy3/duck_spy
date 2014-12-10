@@ -47,4 +47,62 @@ describe DuckSpy do
       it_behaves_like 'it knows about calls', foo: { args: [], result_duck: { bar: {  args: [], result_duck: [] } } }
     end
   end
+
+  describe '#stub' do
+    before(:each) { duck_spy.stub(method, &body) }
+
+    context 'when stubbing the method foo' do
+      let(:method) { :foo }
+
+      context 'and a block that returns its first parameter' do
+        let(:body) { ->(x) { x } }
+
+        describe '#foo(5)' do
+          subject { duck_spy.foo(5) }
+
+          it { is_expected.to be 5 }
+        end
+      end
+
+      context 'and a block that returns 42, and accepts no arguments' do
+        let(:body) { ->{ 42 } }
+
+        describe '#foo' do
+          subject { duck_spy.foo }
+
+          it { is_expected.to be 42 }
+        end
+      end
+    end
+  end
+
+  describe '#behave_like' do
+    before(:each) { duck_spy.behave_like(behavior) }
+
+    context 'when passed the behavior that foo returns 42' do
+      let(:behavior) { { foo: 42 } }
+
+      describe '#foo' do
+        subject { duck_spy.foo }
+
+        it { is_expected.to be 42 }
+      end
+
+      context 'and passed another behavior that bar returns 35' do
+        before(:each) { duck_spy.behave_like(bar: 35) }
+
+        describe '#bar' do
+          subject { duck_spy.bar }
+
+          it { is_expected.to be 35 }
+        end
+
+        describe '#foo' do
+          subject { duck_spy.foo }
+
+          it { is_expected.to be 42 }
+        end
+      end
+    end
+  end
 end
