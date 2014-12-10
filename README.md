@@ -59,5 +59,22 @@ Returns:
     }
 }
 ```
-# TODO
- - Make DuckSpy have stub-able methods (e.g. `File.open(spy, 'r', &:read)`)
+
+## Stubbing
+A `DuckSpy`'s behavior can be stubbed one of two ways:
+```ruby
+spy = DuckSpy.new
+
+spy.behave_like(a: 35, b: 7)
+
+spy.a + spy.b  # => 42
+```
+
+Or, lazily:
+```ruby
+spy = DuckSpy.new
+
+spy.stub(:add) { |a, b| a + b }
+
+spy.add(35, 7) # => 42
+```
