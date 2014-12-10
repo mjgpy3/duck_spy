@@ -67,6 +67,26 @@ describe DuckSpy do
       context 'and a block that returns 42, and accepts no arguments' do
         let(:body) { ->{ 42 } }
 
+        context 'when #foo is called' do
+          before(:each ) { duck_spy.foo }
+
+          context 'when #reset! is called' do
+            before(:each) { duck_spy.reset! }
+
+            describe '#calls' do
+              subject { duck_spy.calls }
+
+              it { is_expected.to be_empty }
+            end
+
+            describe '#foo' do
+              subject { duck_spy.foo }
+
+              it { is_expected.to_not be 42 }
+            end
+          end
+        end
+
         describe '#foo' do
           subject { duck_spy.foo }
 

@@ -1,13 +1,16 @@
 class DuckSpy
   def initialize
-    @calls = {}
-    @behaviors = {}
+    init
   end
 
   def behave_like(behaviors)
     behaviors.each do |method, value|
       @behaviors.merge!(method => ->{ value })
     end
+  end
+
+  def reset!
+    init
   end
 
   def stub(method, &block)
@@ -28,5 +31,12 @@ class DuckSpy
     end
 
     @behaviors.key?(name) ? @behaviors[name].(*args) : new_duck
+  end
+
+  private
+
+  def init
+    @behaviors = {}
+    @calls = {}
   end
 end
